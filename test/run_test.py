@@ -36,6 +36,7 @@ TESTS = [
     'test_dataloader',
     'distributed/test_data_parallel',
     'distributed/test_distributed',
+    'distributed/test_distributed_spawn',
     'test_distributions',
     'test_expecttest',
     'test_foreach',
@@ -93,6 +94,7 @@ WINDOWS_BLOCKLIST = [
     'distributed/rpc/test_process_group_agent',
     'distributed/rpc/test_tensorpipe_agent',
     'distributed/test_distributed',
+    'distributed/test_distributed_spawn',
 ]
 
 ROCM_BLOCKLIST = [
@@ -138,6 +140,7 @@ SLOW_TESTS = [
     'distributed/test_distributed',
     'distributed/rpc/test_process_group_agent',
     'distributed/rpc/test_tensorpipe_agent',
+    'distributed/test_distributed_spawn',
     'test_cuda',
     'test_cuda_primary_ctx',
     'test_cpp_extensions_aot_ninja',
@@ -310,7 +313,7 @@ def test_distributed(test_module, test_directory, options):
             os.environ['INIT_METHOD'] = 'env://'
             os.environ.update(env_vars)
             if with_init_file:
-                if test_module == "test_distributed":
+                if test_module in ["test_distributed", "test_distributed_spawn"]:
                     init_method = 'file://{}/'.format(tmp_dir)
                 else:
                     init_method = 'file://{}/shared_init_file'.format(tmp_dir)
@@ -343,6 +346,7 @@ CUSTOM_HANDLERS = {
     'test_cpp_extensions_aot_no_ninja': test_cpp_extensions_aot_no_ninja,
     'test_cpp_extensions_aot_ninja': test_cpp_extensions_aot_ninja,
     'distributed/test_distributed': test_distributed,
+    'distributed/test_distributed_spawn': test_distributed,
 }
 
 
